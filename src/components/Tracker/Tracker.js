@@ -19,7 +19,7 @@ const useStyles = makeStyles({
     },
 })
 
-export default function Tracker({ tracks = [{ title: 'aaa', duration: 100 }] }) {
+export default function Tracker({ tracks }) {
     const styles = useStyles();
     const track = tracks.map(t => <TrackerEntry track={t} key={t.title} />)
 
@@ -28,6 +28,7 @@ export default function Tracker({ tracks = [{ title: 'aaa', duration: 100 }] }) 
             <TextField
                 classes={{ root: styles.input }}
                 variant='outlined'
+                label='Tracker name'
                 placeholder='Enter tracker name'
                 InputProps={{
                     endAdornment: (

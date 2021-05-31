@@ -8,7 +8,6 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '40vh'
   },
   header: {
     margin: '100px'
@@ -17,11 +16,12 @@ const useStyles = makeStyles({
 
 function App() {
   const styles = useStyles();
+  const tracks = [{ title: 'aaa', duration: 100 }, { title: 'bbb', duration: 1000 }, { title: 'ccc', duration: 10000 }];
 
   return (
     <Container classes={{ root: styles.root }}>
       <Typography variant='h2' classes={{ root: styles.header }}>Tracker</Typography>
-      <Tracker />
+      <Tracker tracks={tracks} />
     </Container>
   );
 }
