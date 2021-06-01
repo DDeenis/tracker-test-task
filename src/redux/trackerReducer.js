@@ -34,6 +34,17 @@ export const runningTrackersSelector = createSelector(trackersSelector, trackers
 export const pausedTrackersSelector = createSelector(trackersSelector, trackers => trackers.filter(t => !t.isRunning));
 
 export const setTrackersAC = (trackers) => ({ type: SET_TRACKERS, trackers });
-export const addTrackerAC = ({ name }) => ({ type: ADD_TRACKER, payload: { id: uuidv4(), name: name || new Date().toUTCString(), duration: 0, isRunning: true } });
+export const addTrackerAC = ({ name }) => ({
+    type: ADD_TRACKER,
+    payload: {
+        id: uuidv4(),
+        name: name || new Date().toUTCString(),
+        duration: 0,
+        isRunning: true
+    }
+});
 export const removeTrackerAC = (trackerId) => ({ type: REMOVE_TRACKER, payload: { trackerId } });
-export const updateTrackerAC = ({ id, name, duration, isRunning }) => ({ type: UPDATE_TRACKER, payload: { id, name, duration, isRunning } });
+export const updateTrackerAC = ({ id, name, duration, isRunning }) => ({
+    type: UPDATE_TRACKER,
+    payload: { id, name, duration, isRunning }
+});

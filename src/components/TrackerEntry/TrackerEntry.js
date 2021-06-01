@@ -3,6 +3,8 @@ import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import React from 'react';
+import classNames from 'classnames';
+import { formatTimeFromSeconds } from '../../utils/time';
 
 const useStyles = makeStyles({
     track: {
@@ -11,20 +13,21 @@ const useStyles = makeStyles({
         alignItems: 'center',
         width: '40vw',
         padding: '25px 10px',
-        borderTop: '1px solid gray',
-        borderBottom: '1px solid gray',
+        borderTop: '1px solid lightgray',
+        borderBottom: '1px solid lightgray',
         transition: 'background-color .3s ease',
     },
     trackInfo: {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        maxWidth: '80%'
     },
     trackControls: {
         display: 'flex',
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        width: '20%'
+        maxWidth: '20%'
     },
     controlIcon: {
         fontSize: '30px',
@@ -38,19 +41,22 @@ const useStyles = makeStyles({
     textBold: {
         fontWeight: 600,
         fontSize: '1.1rem',
+    },
+    textNoOverflow: {
         overflow: 'hidden',
         textOverflow: 'ellipsis'
     },
 });
 
-export default function TrackerEntry({ track, updateTrackerState }) {
+export default function TrackerEntry({ track, updateTrackerState, removeTracker }) {
     const styles = useStyles();
 
     return (
-        <Grid item spacing={3} classes={{ root: styles.track }} style={{ backgroundColor: track.isRunning ? '#faf1e6' : 'transparent' }}>
+        <Grid item classes={{ root: styles.track }} style={{ backgroundColor: track.isRunning ? '#faf1e6' : 'transparent' }}>
             <Container classes={{ root: styles.trackInfo }}>
-                <Typography classes={{ root: styles.textBold }}>{track.name}</Typography>
-                <Typography classes={{ root: styles.textBold }}>{new Date(track.duration * 1000).toISOString().substr(11, 8)}</Typography>
+                <Typography classes={{ root: classNames(styles.textBold, styles.textNoOverflow) }}>{track.name}</Typography>
+                {/* new Date(track.duration * 1000).toISOString().substr(11, 8) */}
+                <Typography classes={{ root: styles.textBold }}>{formatTimeFromSeconds(track.duration)}</Typography>
             </Container>
             <Container disableGutters={true} classes={{ root: styles.trackControls }}>
                 {
@@ -62,7 +68,7 @@ export default function TrackerEntry({ track, updateTrackerState }) {
                             <PauseCircleOutlineIcon color='secondary' classes={{ root: styles.controlIcon }} />
                         </IconButton>
                 }
-                <IconButton size='small'>
+                <IconButton size='small' onClick={() => removeTracker(track.id)}>
                     <HighlightOffIcon color='secondary' classes={{ root: styles.deleteIcon }} />
                 </IconButton>
             </Container>

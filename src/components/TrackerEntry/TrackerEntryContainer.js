@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateTrackerAC } from '../../redux/trackerReducer';
+import { removeTrackerAC, updateTrackerAC } from '../../redux/trackerReducer';
 import TrackerEntry from './TrackerEntry';
 
 export default function TrackerEntryContainer({ track }) {
@@ -8,6 +8,7 @@ export default function TrackerEntryContainer({ track }) {
 
     const updateTrackerState = (isRunning) => dispatch(updateTrackerAC({ ...track, isRunning }));
     const updateTrackerTime = (duration) => dispatch(updateTrackerAC({ ...track, duration }));
+    const removeTracker = (trackerId) => dispatch(removeTrackerAC(trackerId));
 
     useEffect(() => {
         let id = 0;
@@ -25,6 +26,7 @@ export default function TrackerEntryContainer({ track }) {
         <TrackerEntry
             track={track}
             updateTrackerState={updateTrackerState}
+            removeTracker={removeTracker}
         />
     );
 }

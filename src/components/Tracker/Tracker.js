@@ -38,6 +38,10 @@ export default function Tracker({ tracks, createTracker }) {
                 placeholder='Enter tracker name'
                 value={trackerName}
                 onChange={(e) => setTrackerName(e.target.value)}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter')
+                        addTracker()
+                }}
                 InputProps={{
                     endAdornment: (
                         <InputAdornment position="start">
