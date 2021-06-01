@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { InputAdornment, makeStyles, TextField, IconButton, Grid } from '@material-ui/core';
 import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite';
-import TrackerEntry from '../TrackerEntry/TrackerEntry';
+import TrackerEntryContainer from '../TrackerEntry/TrackerEntryContainer';
 
 const useStyles = makeStyles({
     input: {
@@ -19,9 +19,15 @@ const useStyles = makeStyles({
     },
 })
 
-export default function Tracker({ tracks }) {
+export default function Tracker({ tracks, createTracker }) {
     const styles = useStyles();
-    const track = tracks.map(t => <TrackerEntry track={t} key={t.title} />)
+    const [trackerName, setTrackerName] = useState('');
+
+    const trackEntries = tracks.map(t => <TrackerEntryContainer track={t} key={t.id} />);
+    const addTracker = () => {
+        createTracker(trackerName);
+        setTrackerName('');
+    }
 
     return (
         <Grid container={true} direction='column' alignItems='center' justify='center'>
@@ -30,10 +36,12 @@ export default function Tracker({ tracks }) {
                 variant='outlined'
                 label='Tracker name'
                 placeholder='Enter tracker name'
+                value={trackerName}
+                onChange={(e) => setTrackerName(e.target.value)}
                 InputProps={{
                     endAdornment: (
                         <InputAdornment position="start">
-                            <IconButton size='small'>
+                            <IconButton size='small' onClick={() => addTracker()}>
                                 <PlayCircleFilledWhiteIcon fontSize='large' classes={{ root: styles.inputIcon }} />
                             </IconButton>
                         </InputAdornment>
@@ -41,7 +49,7 @@ export default function Tracker({ tracks }) {
                 }}
             />
             {
-                track
+                trackEntries
             }
         </Grid>
     );
