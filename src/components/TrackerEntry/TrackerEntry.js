@@ -55,7 +55,6 @@ export default function TrackerEntry({ track, updateTrackerState, removeTracker 
         <Grid item classes={{ root: styles.track }} style={{ backgroundColor: track.isRunning ? '#faf1e6' : 'transparent' }}>
             <Container classes={{ root: styles.trackInfo }}>
                 <Typography classes={{ root: classNames(styles.textBold, styles.textNoOverflow) }}>{track.name}</Typography>
-                {/* new Date(track.duration * 1000).toISOString().substr(11, 8) */}
                 <Typography classes={{ root: styles.textBold }}>{formatTimeFromSeconds(track.duration)}</Typography>
             </Container>
             <Container disableGutters={true} classes={{ root: styles.trackControls }}>

@@ -30,10 +30,16 @@ export default function trackerReducer(state = initialState, action) {
 }
 
 export const trackersSelector = (state) => state.tracker.trackers;
-export const runningTrackersSelector = createSelector(trackersSelector, trackers => trackers.filter(t => t.isRunning));
-export const pausedTrackersSelector = createSelector(trackersSelector, trackers => trackers.filter(t => !t.isRunning));
+export const runningTrackersSelector = createSelector(
+    trackersSelector,
+    trackers => trackers.filter(t => t.isRunning).sort((curr, next) => next.duration - curr.duration)
+);
+export const pausedTrackersSelector = createSelector(
+    trackersSelector,
+    trackers => trackers.filter(t => !t.isRunning).sort((curr, next) => next.duration - curr.duration)
+);
 
-export const setTrackersAC = (trackers) => ({ type: SET_TRACKERS, trackers });
+export const setTrackersAC = (trackers) => ({ type: SET_TRACKERS, payload: { trackers } });
 export const addTrackerAC = ({ name }) => ({
     type: ADD_TRACKER,
     payload: {
